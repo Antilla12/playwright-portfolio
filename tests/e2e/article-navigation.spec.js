@@ -14,7 +14,8 @@ test.describe('Article page navigation', () => {
     expect(paragraphCount).toBeGreaterThan(0);
   });
 
-  test('table of contents has multiple sections and links scroll to content', async ({ articlePage, page }) => {
+  test('table of contents has multiple sections and links scroll to content', async ({ articlePage, page }, testInfo) => {
+    test.skip(testInfo.project.name === 'mobile-chrome', 'TOC is behind a collapsed menu on mobile Wikipedia; desktop-only interaction pattern');
     const tocCount = await articlePage.getTocItemCount();
     expect(tocCount).toBeGreaterThan(3);
 
@@ -28,7 +29,8 @@ test.describe('Article page navigation', () => {
     expect(hasInfobox).toBeTruthy();
   });
 
-  test('searching from within an article navigates to a new page', async ({ articlePage, page }) => {
+  test('searching from within an article navigates to a new page', async ({ articlePage, page }, testInfo) => {
+    test.skip(testInfo.project.name === 'mobile-chrome', 'Search input is hidden behind a tap-to-reveal overlay on mobile Wikipedia; desktop-only interaction pattern');
     await articlePage.searchFromArticle('Python (programming language)');
     await expect(page).toHaveURL(/Python/);
   });

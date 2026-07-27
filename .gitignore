@@ -1,0 +1,19 @@
+node_modules/
+/test-results/
+/playwright-report/
+/playwright/.cache/
+/blob-report/
+
+# env
+.env
+.env.local
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Editor
+.vscode/*
+!.vscode/extensions.json
+*.log
+npm-debug.log*

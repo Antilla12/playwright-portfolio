@@ -32,6 +32,12 @@ module.exports = defineConfig({
   use: {
     baseURL: process.env.BASE_URL || 'https://www.wikipedia.org',
 
+    // Wikimedia's API policy requires a descriptive User-Agent on all requests.
+    // Missing this can cause throttling or inconsistent errors on some endpoints.
+    extraHTTPHeaders: {
+      'User-Agent': 'PlaywrightPortfolioProject/1.0 (https://github.com/YOUR_USERNAME/YOUR_REPO)',
+    },
+
     // Collect trace on first retry so failures are debuggable without re-running
     trace: 'on-first-retry',
 

@@ -28,7 +28,7 @@ test.describe('Wikipedia REST API - page summary', () => {
     expect(response.status()).toBe(404);
 
     const body = await response.json();
-    expect(body.type).toContain('not_found');
+    expect(body.status).toBe(404);
   });
 
   test('response includes expected content-type header', async ({ request }) => {

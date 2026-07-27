@@ -1,7 +1,7 @@
 const { test, expect } = require('@playwright/test');
 const { api } = require('../../utils/test-data');
 
-test.describe('Wikipedia REST API - random & related pages', () => {
+test.describe('Wikipedia REST API - random pages & revision metadata', () => {
   test('random summary endpoint returns a well-formed article', async ({ request }) => {
     const response = await request.get(`${api.baseUrl}/page/random/summary`);
 
@@ -13,15 +13,16 @@ test.describe('Wikipedia REST API - random & related pages', () => {
     expect(body).toHaveProperty('content_urls');
   });
 
-  test('related pages endpoint returns an array of related articles', async ({ request }) => {
-    const response = await request.get(`${api.baseUrl}/page/related/JavaScript`);
+  test('page/title endpoint returns revision metadata for an existing article', async ({ request }) => {
+    const response = await request.get(`${api.baseUrl}/page/title/JavaScript`);
 
     expect(response.ok()).toBeTruthy();
     const body = await response.json();
 
-    expect(Array.isArray(body.pages)).toBeTruthy();
-    expect(body.pages.length).toBeGreaterThan(0);
-    expect(body.pages[0]).toHaveProperty('title');
+    expect(Array.isArray(body.items)).toBeTruthy();
+    expect(body.items.length).toBeGreaterThan(0);
+    expect(body.items[0].title).toBe('JavaScript');
+    expect(body.items[0]).toHaveProperty('rev');
   });
 
   test('multiple sequential random calls return different articles (sanity check on randomness)', async ({ request }) => {
